@@ -1,0 +1,15 @@
+---
+title: "Sunset Cove Prep"
+output: html_document
+---
+
+##Sunset Cove
+Beautiful, diverse, easy-access, low-anthropogenic-impact area for main study site located in Sweeney Granite Mountains Desert Research Center in the Mojave Desert, California.
+```{r setup, include=FALSE}
+install.packages('maps')
+library(maps)
+#Map of Granite Mountains relative to California
+
+
+```
+
