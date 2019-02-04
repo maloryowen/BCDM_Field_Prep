@@ -1,0 +1,21 @@
+Column,Description
+bird_id,"Identification number (1, 2, 3, etc.) of bird sighting. One number per sighting."
+site,Three letter code for site sampling at. Ex: Sunset Cove is SSC
+sampling,Method of sampling: Area search or Point Count
+date,Date of sampling
+start_time,Time when first searching for bird began
+end_time,Time after two hours of searching for bird
+lat,Lat of bird sighting (will be the same for all records in point count sessions)
+lon,Lon of bird sighting (will be the same for all records in point count sessions)
+bird_species,Species of bird to best of ability. May need to wait until looking at photos. 
+bird_behavior,Behavior Code of focal bird individual (see bird_ethogram)
+mesohabitat,"habitat details at areas of sighting. Ex: shrub, cactus canopy, cactus understory, open, ground, rock, etc."
+photo_id,"Photo document name created by camera. Fill this in AS you take photos, not in post."
+cactus_id,"Only for point sampling, number (1, 2, 3, etc.)"
+x,"Widest point of cactus, cm"
+y,"Width perpendicular to x plane, cm"
+z,Height in cm of tallest branch/paddle
+buds,Number of non-blooming buds
+flowers,Number of blooming flowers
+fruits,Number of fruits
+notes,additional information
