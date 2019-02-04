@@ -1,0 +1,22 @@
+Behavior Name,Behavior Description,Code,Order
+Eating Fruit,Eating part or whole of fruit from plant,EF,Highest
+Pollinating Flower,Body part (usually head or bill) sticks into flower and moves to a new flower on same or different plant,PF,
+Building nest,Constructing nest at the location of nest site,BN,
+Occupied nest,Sitting on nest,ON,
+Carrying nest materials,"Finding twigs, grass, hair, etc. and carrying in mouth to different location",CN,
+Preening,Using bill to clean feathers,P,
+Singing,Individual vocalizing for that species song,S,
+Calling,"Individual vocalizing, but is not the species song",C,
+Distraction Display,"Individual attempting to lure predator (may be observer) away from nest, often feigning injury or aggressive bheavior",DD,
+Copulation,"Male mounts female, may be very quick",CP,
+Foraging,"Searching for food, eating in place where food is found.",FR,
+Sparring,Displaying aggressive behavior towards another bird,SR,
+Fleeing,Moving away from predator (may be observer) in a sudden fashion (not casually moving),FL,
+Courtship Display,Male displaying for female in physical display (not just singing),CD,
+Feeding young,Feeding nestlings (usually regurgitation).,FY,
+Carrying food,"Taking food from one place to another, distance greater than 5 meters",CF,
+Flying on plant,Flying to multiple branches on same plant,FP,
+Flying between plants,Flying from one plant to another without landed on ground,FB,
+Flying,Flying from one point to another,F,
+Standing on Plant,"Standing without feet leaving same location, on top of a plant that supports weight of bird",SP,
+Standing on Ground,"Standing without feet leaving same location, on ground (ok if grass/small plants between bird and ground)",SG,Lowest
