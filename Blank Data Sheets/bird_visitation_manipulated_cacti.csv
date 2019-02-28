@@ -1,1 +1,2 @@
-cacti_ID,bird_ID,arrival_time,taxa,total_time,behavior
+cacti_ID,bird_ID,arrival_time,taxa,total_time_minutes,behavior
+1,1,7:00:00,Anna's Hummingbird,5,pollinating

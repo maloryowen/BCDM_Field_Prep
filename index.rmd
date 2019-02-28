@@ -1,0 +1,193 @@
+---
+title: "Field Prep"
+output: html_document
+---
+####Here is a one-stop shop for all things field prep. 
+
+```{r Setup, include=FALSE}
+
+library(ggplot2)
+library(scales)
+library(lubridate)
+library(knitr)
+
+df <- read.csv("~/Masters/Funding/External Grants/Paul Jorgenson Bird Research Grant/Timeline.csv")
+```
+
+
+```{r Timeline, warning=FALSE}
+#Birds Cactus Double Mutaulism Project Timeline 
+
+df$date <- with(df, ymd(sprintf('%04d%02d%02d', year, month, 1)))
+df <- df[with(df, order(date)), ]
+head(df)
+
+status_levels <- c("Field Work", "Data Analysis", "Writing", "Final Work")
+status_colors <- c("#4CD1BA", "#F0F066", "#F08266", "#474886")
+
+df$status <- factor(df$status, levels=status_levels, ordered=TRUE)
+
+positions <- c(0.5, -0.5, 1.0, -1.0, 1.5, -1.5)
+directions <- c(1, -1)
+
+line_pos <- data.frame(
+  "date"=unique(df$date),
+  "position"=rep(positions, length.out=length(unique(df$date))),
+  "direction"=rep(directions, length.out=length(unique(df$date)))
+)
+
+df <- merge(x=df, y=line_pos, by="date", all = TRUE)
+df <- df[with(df, order(date, status)), ]
+
+head(df)
+
+text_offset <- 0.05
+
+df$month_count <- ave(df$date==df$date, df$date, FUN=cumsum)
+df$text_position <- (df$month_count * text_offset * df$direction) + df$position
+head(df)
+
+month_buffer <- 2
+
+month_date_range <- seq(min(df$date) - months(month_buffer), max(df$date) + months(month_buffer), by='month')
+month_format <- format(month_date_range, '%b')
+month_df <- data.frame(month_date_range, month_format)
+
+year_date_range <- seq(min(df$date) - months(month_buffer), max(df$date) + months(month_buffer), by='year')
+year_date_range <- as.Date(
+  intersect(
+    ceiling_date(year_date_range, unit="year"),
+    floor_date(year_date_range, unit="year")
+  ),  origin = "1970-01-01"
+)
+year_format <- format(year_date_range, '%Y')
+year_df <- data.frame(year_date_range, year_format)
+
+timeline_plot<-ggplot(df,aes(x=date,y=0, col=status, label=milestone))
+timeline_plot<-timeline_plot+labs(col="Milestones")
+timeline_plot<-timeline_plot+scale_color_manual(values=status_colors, labels=status_levels, drop = FALSE)
+timeline_plot<-timeline_plot+theme_classic()
+
+# Plot horizontal black line for timeline
+timeline_plot<-timeline_plot+geom_hline(yintercept=0, 
+                                        color = "black", size=0.3)
+
+# Plot vertical segment lines for milestones
+timeline_plot<-timeline_plot+geom_segment(data=df[df$month_count == 1,], aes(y=position,yend=0,xend=date), color='black', size=0.2)
+
+# Plot scatter points at zero and date
+timeline_plot<-timeline_plot+geom_point(aes(y=0), size=3)
+
+# Don't show axes, appropriately position legend
+timeline_plot<-timeline_plot+theme(axis.line.y=element_blank(),
+                                   axis.text.y=element_blank(),
+                                   axis.title.x=element_blank(),
+                                   axis.title.y=element_blank(),
+                                   axis.ticks.y=element_blank(),
+                                   axis.text.x =element_blank(),
+                                   axis.ticks.x =element_blank(),
+                                   axis.line.x =element_blank(),
+                                   legend.position = "bottom"
+)
+
+# Show text for each month
+timeline_plot<-timeline_plot+geom_text(data=month_df, aes(x=month_date_range,y=-0.1,label=month_format),size=2.5,vjust=0.5, color='black', angle=90)
+# Show year text
+timeline_plot<-timeline_plot+geom_text(data=year_df, aes(x=year_date_range,y=-0.2,label=year_format, fontface="bold"),size=2.5, color='black')
+# Show text for each milestone
+timeline_plot<-timeline_plot+geom_text(aes(y=text_position,label=milestone),size=2.5)
+print(timeline_plot)
+
+```
+
+####A final look at equipment models and cost. 
+```{r Equipment}
+equipment <- read.csv("~/Masters/BCDM_Field_Prep/Equipment.csv")
+kable(equipment)
+```
+
+####Our bird ethogram, which will keep bird behavior observations consistent across observing (and collaborators)
+```{r Bird Ethogram}
+ethogram <- read.csv("~/Masters/BCDM_Field_Prep/bird_ethogram.csv")
+kable(ethogram)
+```
+
+####Blank datasheets prepped. 
+```{r}
+#Bird visitation
+bird_visitation <- read.csv("~/Masters/BCDM_Field_Prep/Blank Data Sheets/bird_visitation_manipulated_cacti.csv")
+kable(bird_visitation)
+
+#Cactus Flower Data
+cactus_flower <- read.csv("~/Masters/BCDM_Field_Prep/Blank Data Sheets/cacti_flower_measurements.csv")
+kable(cactus_flower)
+
+#Cactus Fruit Data
+cactus_fruit <- read.csv("~/Masters/BCDM_Field_Prep/Blank Data Sheets/cacti_fruit_measurements.csv")
+kable(cactus_fruit)
+
+#Joy Sampling Data 
+joy <- read.csv("~/Masters/BCDM_Field_Prep/Blank Data Sheets/joy_sampling.csv")
+kable(joy)
+
+#Joy Sampling Metadata
+joy_meta <- read.csv("~/Masters/BCDM_Field_Prep/Blank Data Sheets/joy_sampling_metadata.csv")
+kable(joy_meta)
+```
+
+###Joy Sampling Protocol
+
+Joy sampling is a term rooted in the idea that sampling can be fun, relaxed, and systematic at the same time. For this project, we are interested in recording bird visitation, location, and behavior. We will employ two strategies of joy sampling: area search and point count. 
+
+####Equipment: 
+* 150-600mm lens with digital camera (or your highest zoom lens)
+* GPS unit (recreational of research grade is acceptable)
+* Data sheets
+* Binoculars (optional, good if you have multiple researchers)
+* Tape Measurer (for Point Count sampling)
+* Lawn chair (for Point Count sampling)
+
+####Area Search:  
+Area Search sampling will essentially be a spot-and-chase style sampling, to the end of documenting birds throughout the entire study site. Sampling events should be evenly split between mornings, middays, afternoons, and evenings, as bird activity will likely be higher in mornings and evenings (and we want a full distribution of the data). Ideally, each sample would be a separate day. We would like to have 50 hours of Area Search Joy Sampling data by the end of each season.
+
+####Protocol:
+1. Note start time, begin sampling at entrance to study site. 
+    a. For first sampling session, note lat/lon for entrance to study site.
+  2. Using binoculars/camera, scan site until a bird is seen.
+    a. If no bird found, walk more deeply into the site until a bird is seen.  
+   b. If you see multiple birds, follow up on the closer bird.
+   c. If you see a flock, choose one bird as “focal” individual. Note number of bird in flock. Follow protocol for all birds in the flock.
+  3. Photograph bird (try to get >5 pictures, or <30 second video)
+    a. Always start session with blank SD card, labelled with site 3-letter acronym, date, and sampling style abbreviation. 
+    b. Record Photo ID range of each bird sighting on datasheet.
+    c. Take photos when you first see it, then move closer to take more detailed photos.
+    d. After session, load photos into unique file named the same as step 3a. 
+    e. Choose one photo from each sighting that best represents bird species and behavior. 
+    f. Rename chosen sighting photo to be the same as the Bird ID for that record. That is, there should be one photo for each record. 
+  4. Use the Bird Ethogram to record bird behavior codes, and take notes of any unusual details. Use the “highest order” behavior is bird is performing more than one behavior at once. ID bird to most precise taxonomic level (ideally, species). 
+  5. Get as close as you can to where the bird was first spotted and take lat/lon of bird location
+    a. Do not disturb bird! Either wait for it to leave or take lat/lon from further away and make a note. 
+  6. Name point in GPS as three-letter code for site followed by bird number ID for that day followed by “A” for Area Search. Ex: The 4th bird documented at Granites Sunset Cove would be coded as GSC4M, or the 18th bird at Wind Wolves Historical Bakersfield cactus population would WWH18M. 
+  7. Repeat procedure for 2 hours sessions. Note end time.
+
+####Point Count  
+Point count sampling is the alternate version of the area searches, in that you’ll be sitting and recording birds that visit a location instead of chasing them. Similarly to area search sampling, we hope to get 50 hours of observation with an equal mix of observations throughout mornings, middays, afternoons, and evenings. Sessions should last 2 hours.  
+
+####Protocol:
+1. Pick a cactus individual to observe.
+2. Set up shop with your lovely lawn chair 10m away from cactus individual.
+3. Measure x, y, z and estimate number of basal paddles/branches (those rooted in the ground).
+4. Count buds, flowers, or fruit. 
+5. Record lat/lon, name as 3-letter site code, followed by session ID number, followed by “P” for Point count. For example, the 12th Point Count session at Wind Wolves Historical Bakersfield cactus population would be: WWH12S.
+6. Note start time. 
+    a. If bird visits, take short video (<30 seconds) or 5 photos.
+Because you are stationary, prioritize videos.  
+    b. Use same protocol for photo organization as listed in Area Search Step 3.  
+Tips  
+1. To locate bird, use you ears as well! 
+2. Flyovers don’t count in area searches or point counts. 
+    a. A flyover is when a bird flies over a site without us seeing it take off or land from any point. Think of when Canada Geese fly overhead. 
+3. Bring spare double A batteries for GPS with you! Charge camera battery every night. 
+4. Bring many spare SD cards into the field with you. 
+5. Do not delete any photos in the field, even if they seem to be blurry/not of the bird. Only do this on the computer. If you run out of space, use another SD card and put photos in separate file.
+
