@@ -10,6 +10,8 @@ library(ggplot2)
 library(scales)
 library(lubridate)
 library(knitr)
+library(ggmap)
+library(maps)
 
 df <- read.csv("~/Masters/Funding/External Grants/Paul Jorgenson Bird Research Grant/Timeline.csv")
 ```
@@ -99,6 +101,21 @@ timeline_plot<-timeline_plot+geom_text(aes(y=text_position,label=milestone),size
 print(timeline_plot)
 
 ```
+
+####Occurrences of *Cylindropuntia acanthocarpa* via gbif. 
+```{r gbif, warning=FALSE}
+gbif <- read.csv("~/Masters/BCDM_Field_Prep/Cylindropuntia acanthocarpa gbif/Cylindropuntia_acanthocarpa_gbif.csv")
+
+
+#map the occurrences
+cali <- get_map(location = c(lon = -112.625, lat = 33.12), zoom = 6, maptype = "watercolor")
+p <- ggmap(cali)
+p + geom_point(data=gbif, aes(x=decimalLongitude, y=decimalLatitude), alpha = .5, size = 1) +
+  labs(x = "longitude", y = "latitude")
+
+```
+
+
 
 ####A final look at equipment models and cost. 
 ```{r Equipment}

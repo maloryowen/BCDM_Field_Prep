@@ -1,0 +1,20 @@
+rep,replication (200 total)
+cactus_ID,"unique id for cactus, same as metal tag"
+lat,latitude of plant
+lon,longitude of plant
+x,major axis cm
+y,minor axis cm
+z,height cm
+new_growth_branches,total number of new (lighter green color) branches
+new_growth_length,total length of new growth branches (sum)
+branches,estimate of total number of branches
+green_new_growth,greeness (measurement tbd) of new growth
+total_blooms,total number of blooming flowers
+total_buds,total number of non-blooming buds
+total_fruit,count of fruit/plant
+total_fruit_mass,total mass of all fruit on a plant before seed removal
+mean_fruit_mass,mean mass of each fruit of plant
+total_seed,total number of seeds per plant
+total_seed_mass,total mass of all seeds per plant
+count_fruit_seed,mean number of seeds per fruit for an individual plant
+mean_fruit_seed_mass,mean mass of seeds per fruit for an individual plant

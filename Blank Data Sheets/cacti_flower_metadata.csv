@@ -1,0 +1,12 @@
+cactus_ID,the unique ID for the cactus individual measured
+size_class,"small, medium, or large based on equal bin class sizes"
+percent_removed,"0, 25, 50, 75, 100 percentage of removed blooming flowers"
+orginal_flower,how many flowers blooming total
+take_flower,how many flowers blooming removed
+buds,how many non-blooming buds total on plant
+lat,latitude of plant
+lon,longitude of plant
+x,major axis cm
+y,minor axis cm
+z,height cm
+branches,number of branches

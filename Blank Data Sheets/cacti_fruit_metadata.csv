@@ -1,0 +1,14 @@
+cactus_ID,the unique ID for the cactus individual measured
+size_class,"small, medium, or large based on equal bin class sizes"
+percent removed,"0, 25, 50, 75, 100 percentage of removed fruit"
+original_fruit,how many fruit total
+take_fruit,how many fruit removed
+mass_of_fruit,"total mass of all fruit prior to seed removal, grams"
+number_of_seeds,average count of seeds per fruit (n)
+mass_of_seeds,average total mass of seeds per fruit
+lat,latitude of plant
+lon,longitude of plant
+x,major axis cm
+y,minor axis cm
+z,height cm
+branches,number of branches
